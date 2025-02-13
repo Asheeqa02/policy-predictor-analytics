@@ -8,6 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from "react";
 
 const countryData = [
   {
@@ -41,31 +50,59 @@ const countryData = [
 ];
 
 const CountryTable = () => {
+  const [selectedCountry, setSelectedCountry] = useState<string>("all");
+
+  const filteredData = selectedCountry === "all" 
+    ? countryData 
+    : countryData.filter(row => row.country === selectedCountry);
+
   return (
     <Card className="p-6">
-      <h3 className="text-lg font-semibold mb-4">Country Analysis Table</h3>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Country</TableHead>
-            <TableHead>Region</TableHead>
-            <TableHead>Relationship Status</TableHead>
-            <TableHead>Trade Volume</TableHead>
-            <TableHead>Risk Level</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {countryData.map((row) => (
-            <TableRow key={row.country}>
-              <TableCell className="font-medium">{row.country}</TableCell>
-              <TableCell>{row.region}</TableCell>
-              <TableCell>{row.relationshipStatus}</TableCell>
-              <TableCell>{row.tradeVolume}</TableCell>
-              <TableCell>{row.riskLevel}</TableCell>
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-lg font-semibold">Country Analysis Table</h3>
+        <Select
+          value={selectedCountry}
+          onValueChange={setSelectedCountry}
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Select a country" />
+          </SelectTrigger>
+          <SelectContent>
+            <ScrollArea className="h-[200px]">
+              <SelectItem value="all">All Countries</SelectItem>
+              {countryData.map((row) => (
+                <SelectItem key={row.country} value={row.country}>
+                  {row.country}
+                </SelectItem>
+              ))}
+            </ScrollArea>
+          </SelectContent>
+        </Select>
+      </div>
+      <ScrollArea className="h-[400px]">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Country</TableHead>
+              <TableHead>Region</TableHead>
+              <TableHead>Relationship Status</TableHead>
+              <TableHead>Trade Volume</TableHead>
+              <TableHead>Risk Level</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {filteredData.map((row) => (
+              <TableRow key={row.country}>
+                <TableCell className="font-medium">{row.country}</TableCell>
+                <TableCell>{row.region}</TableCell>
+                <TableCell>{row.relationshipStatus}</TableCell>
+                <TableCell>{row.tradeVolume}</TableCell>
+                <TableCell>{row.riskLevel}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </ScrollArea>
     </Card>
   );
 };
