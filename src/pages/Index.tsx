@@ -1,4 +1,6 @@
 
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import Navigation from "@/components/Navigation";
 import MetricCard from "@/components/MetricCard";
@@ -9,6 +11,13 @@ import CountryTable from "@/components/CountryTable";
 import Methodology from "@/components/Methodology";
 
 const Index = () => {
+  const { user } = useAuth();
+
+  // Redirect to auth page if not logged in
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
