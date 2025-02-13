@@ -1,12 +1,75 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import Header from "@/components/Header";
+import Navigation from "@/components/Navigation";
+import MetricCard from "@/components/MetricCard";
+import TrendChart from "@/components/TrendChart";
+import PredictionCard from "@/components/PredictionCard";
+import RegionalAnalysis from "@/components/RegionalAnalysis";
+import CountryTable from "@/components/CountryTable";
+import Methodology from "@/components/Methodology";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <Navigation />
+      <main className="container py-6">
+        <div className="grid gap-6">
+          {/* Metrics Section */}
+          <section className="grid gap-6 md:grid-cols-3">
+            <MetricCard
+              title="Global Relations Index"
+              value="85"
+              description="Overall international relations score"
+              trend="up"
+            />
+            <MetricCard
+              title="Regional Influence"
+              value="72%"
+              description="ASEAN region influence score"
+              trend="neutral"
+            />
+            <MetricCard
+              title="Diplomatic Risk"
+              value="Low"
+              description="Current global risk assessment"
+              trend="down"
+            />
+          </section>
+
+          {/* Analysis Sections */}
+          <div className="grid gap-6 md:grid-cols-2">
+            <TrendChart />
+            <RegionalAnalysis />
+          </div>
+
+          {/* Predictions Section */}
+          <section className="grid gap-6 md:grid-cols-2">
+            <PredictionCard
+              title="Economic Impact"
+              probability={78}
+              impact="High"
+              description="Predicted positive impact on regional trade relations"
+            />
+            <PredictionCard
+              title="Diplomatic Relations"
+              probability={65}
+              impact="Medium"
+              description="Potential improvements in bilateral ties"
+            />
+          </section>
+
+          {/* Country Data Table */}
+          <section>
+            <CountryTable />
+          </section>
+
+          {/* Methodology Section */}
+          <section>
+            <Methodology />
+          </section>
+        </div>
+      </main>
     </div>
   );
 };
